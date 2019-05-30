@@ -3,6 +3,7 @@ package mx.devlabs.zmovies.mvvm
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import mx.devlabs.zmovies.models.Movie
+import mx.devlabs.zmovies.services.HttpClient
 import mx.devlabs.zmovies.services.HttpResponse
 import retrofit2.Call
 import retrofit2.Callback

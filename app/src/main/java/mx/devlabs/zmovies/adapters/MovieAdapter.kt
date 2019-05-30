@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import mx.devlabs.zmovies.R
 import mx.devlabs.zmovies.models.Movie
-import mx.devlabs.zmovies.services.Routes
+import mx.devlabs.zmovies.services.Config
 
 class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -58,7 +58,7 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
             Glide
                     .with(viewHolder.itemView.context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(Routes.IMG_HOST + mMovies[i].poster_path)
+                    .load(Config.IMG_HOST + mMovies[i].poster_path)
                     .into(viewHolder.image)
         }
     }

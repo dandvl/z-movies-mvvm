@@ -15,7 +15,7 @@ import mx.devlabs.zmovies.testing.Testing
 import mx.devlabs.zmovies.util.VerticalSpacingItemDecorator
 import mx.devlabs.zmovies.mvvm.MoviesListVM
 
-class StartActivity : BaseActivity(), OnMovieListener{
+class MainActivity : BaseActivity(), OnMovieListener{
 
     private lateinit var moviesListVM: MoviesListVM
     private var mRecyclerAdapter : MovieAdapter? = null
@@ -62,11 +62,11 @@ class StartActivity : BaseActivity(), OnMovieListener{
 
 
     private fun initRecyclerView(){
-        mRecyclerAdapter = MovieAdapter(this@StartActivity)
+        mRecyclerAdapter = MovieAdapter(this@MainActivity)
         movies_list.adapter = mRecyclerAdapter
         var itemDecorator = VerticalSpacingItemDecorator(30)
         movies_list.addItemDecoration(itemDecorator)
-        movies_list.layoutManager = LinearLayoutManager(this@StartActivity)
+        movies_list.layoutManager = LinearLayoutManager(this@MainActivity)
     }
 
     override fun onMovieClick(position: Int) {

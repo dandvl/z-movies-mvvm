@@ -121,7 +121,7 @@ class MovieApiClient private constructor() {
 //        }
 //
 //        private fun getMovies(): Call<HttpResponse<Movie>> {
-//            return HttpClient.moviesRoutes.movies(Routes.API_KEY)
+//            return HttpClient.moviesRoutes.movies(Config.API_KEY)
 //        }
 //
 //        private fun cancelRequest() {

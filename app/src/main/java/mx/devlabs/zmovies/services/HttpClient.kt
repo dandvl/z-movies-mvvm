@@ -1,7 +1,5 @@
-package mx.devlabs.zmovies.mvvm
+package mx.devlabs.zmovies.services
 
-import mx.devlabs.zmovies.services.MoviesRoutes
-import mx.devlabs.zmovies.services.Routes
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -16,7 +14,7 @@ class HttpClient {
 
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                        .baseUrl(Routes.HOST)
+                        .baseUrl(Config.HOST)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
             }

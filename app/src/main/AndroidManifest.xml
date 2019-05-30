@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.StartActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/title_activity_initial">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
