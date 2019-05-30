@@ -20,12 +20,19 @@ class MoviesServices{
             request.enqueue(object: Callback<HttpResponse<Movie>> {
                 override fun onFailure(call: Call<HttpResponse<Movie>>, t: Throwable) {
                     Log.e("RMC", t.message)
+                    moviesLD.postValue(null)
                 }
                 override fun onResponse(call: Call<HttpResponse<Movie>>, response: Response<HttpResponse<Movie>>) {
                     val response = response?.body() as HttpResponse
                     val movies = response.results
 
-                    moviesLD.postValue(movies)
+                    if(page == 1){
+                        moviesLD.postValue(movies)
+                    }else{
+                        val currentMovies = moviesLD.value as MutableList<Movie>
+                        currentMovies.addAll(movies)
+                        moviesLD.postValue(currentMovies)
+                    }
                 }
             })
 

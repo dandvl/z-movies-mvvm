@@ -19,11 +19,6 @@ class MoviesRepository private constructor() {
     }
 
     fun searchMovies(query: String, pageNumber: Int) {
-        var pageNumber = pageNumber
-        if (pageNumber == 0) {
-            pageNumber = 1
-        }
-
         this.query = query
         this.pageNumber = pageNumber
 
@@ -32,7 +27,7 @@ class MoviesRepository private constructor() {
 
     fun searchNextPage(){
         Log.i("RMC", "search next page!")
-        searchMovies(query, pageNumber++)
+        searchMovies(query, ++pageNumber)
     }
 
     fun popularMovies() {

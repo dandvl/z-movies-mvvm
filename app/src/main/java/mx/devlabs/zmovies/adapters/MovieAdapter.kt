@@ -46,7 +46,6 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
         if(getItemViewType(i) == MOVIE_TYPE){
-            Log.i("RMC", "mMovies[i].overview${mMovies[i].overview}")
             viewHolder as MovieViewHolder
             viewHolder.title.text = mMovies[i].original_title
             viewHolder.publisher.text = mMovies[i].overview
@@ -68,11 +67,11 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (mMovies.get(position).original_title.equals("LOADING...")) {
+        return if (mMovies[position].original_title.equals("LOADING...")) {
             LOADING_TYPE
         } else if(position == mMovies.size - 1
                 && position != 0
-                && !mMovies.get(position).original_title.equals("EXHAUSTED...")){
+                && !mMovies[position].original_title.equals("EXHAUSTED...")){
             LOADING_TYPE
         }else {
             MOVIE_TYPE
@@ -90,8 +89,8 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
     }
 
     private fun isLoading(): Boolean {
-        if (mMovies.size > 0) {
-            if (mMovies.get(mMovies.size - 1).original_title.equals("LOADING...")) {
+        if (mMovies.isNotEmpty()) {
+            if (mMovies[mMovies.size].original_title.equals("LOADING...")) {
                 return true
             }
         }

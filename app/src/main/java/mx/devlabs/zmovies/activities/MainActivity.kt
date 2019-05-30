@@ -52,6 +52,7 @@ class MainActivity : BaseActivity(), OnMovieListener{
                 return false
             }
         })
+        search_view.setQuery("capitan", true)
     }
 
     private fun subscribeObservers() {
