@@ -4,17 +4,16 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import mx.devlabs.zmovies.models.Movie
 
-class MoviesListViewModel : ViewModel() {
+class MoviesListVM : ViewModel() {
 
     private val mMovieRepository: MovieRepository = MovieRepository.getInstance()
-    var isPerfomingQuery : Boolean = false
+    var isPerformingQuery : Boolean = false
 
-    val movies: LiveData<List<Movie>>
-        get() = mMovieRepository.getMovies()
+    val movies: LiveData<List<Movie>> get() = mMovieRepository.getMovies()
 
-    fun searchMoviesApi(query: String, pageNumber: Int) {
-        this.isPerfomingQuery = true
-        mMovieRepository.searchMoviesWS(query, pageNumber)
+    fun searchMovies(query: String, pageNumber: Int) {
+        this.isPerformingQuery = true
+        mMovieRepository.searchMovies(query, pageNumber)
     }
 
     fun getAllMoviesApi() {
@@ -22,9 +21,9 @@ class MoviesListViewModel : ViewModel() {
     }
 
     fun onBackPressed() : Boolean {
-        if(isPerfomingQuery){
+        if(isPerformingQuery){
             mMovieRepository.cancelRequest()
-            isPerfomingQuery = false
+            isPerformingQuery = false
         }
         return true
     }

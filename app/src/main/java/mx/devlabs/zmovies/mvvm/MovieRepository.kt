@@ -13,7 +13,7 @@ class MovieRepository private constructor() {
         return mMovieApiClient.movies
     }
 
-    fun searchMoviesWS(query: String, pageNumber: Int) {
+    fun searchMovies(query: String, pageNumber: Int) {
         var pageNumber = pageNumber
         if (pageNumber == 0) {
             pageNumber = 1
@@ -21,7 +21,7 @@ class MovieRepository private constructor() {
         mMovieApiClient.searchMovies(query, pageNumber)
     }
 
-    fun popularMoviesWS() {
+    fun popularMovies() {
 //        mMovieApiClient.getAllMoviesApi()
     }
 

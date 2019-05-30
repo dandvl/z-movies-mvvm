@@ -13,18 +13,18 @@ import mx.devlabs.zmovies.adapters.OnMovieListener
 import mx.devlabs.zmovies.models.Movie
 import mx.devlabs.zmovies.testing.Testing
 import mx.devlabs.zmovies.util.VerticalSpacingItemDecorator
-import mx.devlabs.zmovies.mvvm.MoviesListViewModel
+import mx.devlabs.zmovies.mvvm.MoviesListVM
 
 class StartActivity : BaseActivity(), OnMovieListener{
 
-    private var moviesListViewModel: MoviesListViewModel? = null
+    private lateinit var moviesListVM: MoviesListVM
     private var mRecyclerAdapter : MovieAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        moviesListViewModel = ViewModelProviders.of(this).get(MoviesListViewModel::class.java)
+        moviesListVM = ViewModelProviders.of(this).get(MoviesListVM::class.java)
 
         initRecyclerView()
         initSearchView()
@@ -34,9 +34,9 @@ class StartActivity : BaseActivity(), OnMovieListener{
     private fun initSearchView() {
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.support.v7.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
+                if (query != null && query.isNotEmpty()) {
                     mRecyclerAdapter?.displayLoading()
-                    moviesListViewModel?.searchMoviesApi(query, 1)
+                    moviesListVM?.searchMovies(query, 1)
                     search_view.clearFocus()
                 }
                 return false
@@ -48,12 +48,14 @@ class StartActivity : BaseActivity(), OnMovieListener{
     }
 
     private fun subscribeObservers() {
-        moviesListViewModel!!.movies.observe(this, object : Observer<List<Movie>> {
+        moviesListVM.movies.observe(this, object : Observer<List<Movie>> {
             override fun onChanged(movies: List<Movie>?) {
-                if (movies != null) {
+                if (movies != null && movies.isNotEmpty()) {
                     Testing.printMovies("RMC", movies)
-                    moviesListViewModel?.isPerfomingQuery = false
+                    moviesListVM.isPerformingQuery = false
                     mRecyclerAdapter?.setMovies(movies)
+                }else{
+                    Log.i("RMC", "No movies")
                 }
             }
         })
@@ -77,7 +79,7 @@ class StartActivity : BaseActivity(), OnMovieListener{
     }
 
     override fun onBackPressed() {
-        if(moviesListViewModel!!.onBackPressed()){
+        if(moviesListVM!!.onBackPressed()){
             super.onBackPressed()
         }else{
             //categories
@@ -87,6 +89,5 @@ class StartActivity : BaseActivity(), OnMovieListener{
     //loading
     //back button
     //categories
-
 
 }
