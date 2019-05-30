@@ -32,7 +32,7 @@ class HorizontalDottedProgress : View {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
     //Method to draw your customized dot on the canvas
-    override protected fun onDraw(canvas: Canvas) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         val paint = Paint()
@@ -44,7 +44,7 @@ class HorizontalDottedProgress : View {
         createDot(canvas, paint)
     }
 
-    override protected fun onAttachedToWindow() {
+    override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         //Animation called when attaching to the window, i.e to your screen
         startAnimation()
@@ -64,7 +64,7 @@ class HorizontalDottedProgress : View {
 
     }
 
-    override protected fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val width: Int
         val height: Int
@@ -109,7 +109,7 @@ class HorizontalDottedProgress : View {
 
 
     private inner class BounceAnimation : Animation() {
-        override protected fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+        override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
             super.applyTransformation(interpolatedTime, t)
             //call invalidate to redraw your view againg.
             invalidate()

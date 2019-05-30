@@ -1,11 +1,12 @@
-package mx.devlabs.zmovies.services
+package mx.devlabs.zmovies.mvvm
 
-import android.util.Log
+import mx.devlabs.zmovies.services.MovieServices
+import mx.devlabs.zmovies.services.Routes
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class HttpClient {
+class WebServices {
 
     companion object {
 
@@ -22,6 +23,8 @@ class HttpClient {
 
             return retrofit!!
         }
+
+        val movies= instance().create(MovieServices::class.java)
     }
 }
 

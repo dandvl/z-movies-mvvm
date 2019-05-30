@@ -10,9 +10,10 @@ import java.util.concurrent.TimeUnit
 import retrofit2.Call
 
 import mx.devlabs.zmovies.AppExecutors
-import mx.devlabs.zmovies.Constants
 import mx.devlabs.zmovies.models.Movie
+import mx.devlabs.zmovies.mvvm.WebServices
 import mx.devlabs.zmovies.services.HttpResponse
+import mx.devlabs.zmovies.services.Routes
 
 
 class MovieApiClient private constructor() {
@@ -85,7 +86,7 @@ class MovieApiClient private constructor() {
 //            if(page < 0){
 //                page = 1
 //            }
-            return ServiceGenerator.getMoviesApi.searchMovies("en-US", query, page, false)
+            return WebServices.movies.searchMovies("en-US", query, page, false)
 //            return ServiceGenerator.getMoviesApi.popularMovies(Constants.API_KEY)
         }
 
@@ -135,7 +136,7 @@ class MovieApiClient private constructor() {
         }
 
         private fun getMovies(): Call<HttpResponse<Movie>> {
-            return ServiceGenerator.getMoviesApi.movies(Constants.API_KEY)
+            return WebServices.movies.movies(Routes.API_KEY)
         }
 
         private fun cancelRequest() {

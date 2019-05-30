@@ -1,4 +1,4 @@
-package mx.devlabs.zmovies.requests.response
+package mx.devlabs.zmovies.services.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

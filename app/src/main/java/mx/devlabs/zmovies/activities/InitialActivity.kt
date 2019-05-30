@@ -1,8 +1,6 @@
 package mx.devlabs.zmovies.activities
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,12 +9,11 @@ import android.view.View
 import mx.devlabs.zmovies.R
 
 import kotlinx.android.synthetic.main.activity_initial.*
-import mx.devlabs.zmovies.adapters.MovieAdapter
 import mx.devlabs.zmovies.models.Movie
-import mx.devlabs.zmovies.services.HttpClient
+import mx.devlabs.zmovies.mvvm.WebServices
 import mx.devlabs.zmovies.services.HttpResponse
 import mx.devlabs.zmovies.services.Routes
-import mx.devlabs.zmovies.services.WebServices
+import mx.devlabs.zmovies.services.MovieServices
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -83,7 +80,7 @@ class InitialActivity : AppCompatActivity() {
         Log.i("zmovies", "endDate"+ strEndDate)
         Log.i("zmovies", "startDate" + strStartDate)
 
-        val services = HttpClient.instance().create(WebServices::class.java)
+        val services = WebServices.instance().create(MovieServices::class.java)
         //val movies = services.movies(Routes.API_KEY)
         val movies = services.lastMoviesIn(Routes.API_KEY, strStartDate, strEndDate)
 
@@ -105,7 +102,7 @@ class InitialActivity : AppCompatActivity() {
 
                 val sfwMovies = movies.filter { !it.adult }
 
-                viewAdapter = MovieAdapter(sfwMovies)
+//                viewAdapter = MovieAdapter(sfwMovies)
                 recyclerView.adapter = viewAdapter
 
                 /*for(movie in movies){

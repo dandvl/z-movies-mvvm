@@ -8,17 +8,17 @@ import android.util.Log
 import android.widget.SearchView
 import kotlinx.android.synthetic.main.activity_start.*
 import mx.devlabs.zmovies.R
-import mx.devlabs.zmovies.adapters.Movie2Adapter
+import mx.devlabs.zmovies.adapters.MovieAdapter
 import mx.devlabs.zmovies.adapters.OnMovieListener
 import mx.devlabs.zmovies.models.Movie
 import mx.devlabs.zmovies.testing.Testing
 import mx.devlabs.zmovies.util.VerticalSpacingItemDecorator
-import mx.devlabs.zmovies.viewmodel.MoviesListViewModel
+import mx.devlabs.zmovies.mvvm.MoviesListViewModel
 
 class StartActivity : BaseActivity(), OnMovieListener{
 
     private var moviesListViewModel: MoviesListViewModel? = null
-    private var mRecyclerAdapter : Movie2Adapter? = null
+    private var mRecyclerAdapter : MovieAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +61,7 @@ class StartActivity : BaseActivity(), OnMovieListener{
 
 
     private fun initRecyclerView(){
-        mRecyclerAdapter = Movie2Adapter(this@StartActivity)
+        mRecyclerAdapter = MovieAdapter(this@StartActivity)
         movies_list.adapter = mRecyclerAdapter
         var itemDecorator = VerticalSpacingItemDecorator(30)
         movies_list.addItemDecoration(itemDecorator)

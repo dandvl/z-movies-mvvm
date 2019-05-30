@@ -9,6 +9,4 @@ object Routes {
     const val MOVIE_DETAIL = "movie/{movie_id}?api_key=$API_KEY"
     const val POPULAR_MOVIES = "/3/discover/movie?sort_by=popularity.desc"
     const val SEARCH_MOVIES = "/3/search/movie?api_key=$API_KEY"
-//    const val SEARCH_MOVIES = "/3/search/movie?api_key=$API_KEY&language={lang}&query={query}&page={page}&include_adult={include_adult}"
-//    const val SEARCH_MOVIES = "/3/search/movie?api_key=$API_KEY&language=en-US&query=capitan&page=1&include_adult=false"
 }

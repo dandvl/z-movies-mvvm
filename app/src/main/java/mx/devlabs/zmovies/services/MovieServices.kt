@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.GET
 
-interface WebServices {
+interface MovieServices {
 
     @GET(Routes.LAST_CHANGES)
     fun movies(@Query("api_key") api_key: String): Call<HttpResponse<Movie>>
@@ -15,5 +15,11 @@ interface WebServices {
 
     @GET(Routes.MOVIE_DETAIL)
     fun movieDetail(@Path("movie_id") movie_id: String, @Query("api_key") api_key: String): Call<Movie>
+
+    @GET(Routes.POPULAR_MOVIES)
+    fun popularMovies(@Query("api_key") api_key: String): Call<HttpResponse<Movie>>
+
+    @GET(Routes.SEARCH_MOVIES)
+    fun searchMovies(@Query("lang") lang : String, @Query("query") query : String, @Query("page") page : Int, @Query("include_adult") include_adult: Boolean): Call<HttpResponse<Movie>>
 
 }

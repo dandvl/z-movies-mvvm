@@ -1,4 +1,4 @@
-package mx.devlabs.zmovies.repositories
+package mx.devlabs.zmovies.mvvm
 
 import android.arch.lifecycle.LiveData
 import mx.devlabs.zmovies.models.Movie
@@ -13,7 +13,7 @@ class MovieRepository private constructor() {
         return mMovieApiClient.movies
     }
 
-    fun searchMoviesApi(query: String, pageNumber: Int) {
+    fun searchMoviesWS(query: String, pageNumber: Int) {
         var pageNumber = pageNumber
         if (pageNumber == 0) {
             pageNumber = 1
@@ -21,7 +21,7 @@ class MovieRepository private constructor() {
         mMovieApiClient.searchMovies(query, pageNumber)
     }
 
-    fun getAllMoviesApi() {
+    fun popularMoviesWS() {
 //        mMovieApiClient.getAllMoviesApi()
     }
 

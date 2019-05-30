@@ -5,70 +5,96 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import mx.devlabs.zmovies.R
 import mx.devlabs.zmovies.models.Movie
-import com.bumptech.glide.Glide
-import mx.devlabs.zmovies.services.HttpClient
 import mx.devlabs.zmovies.services.Routes
-import mx.devlabs.zmovies.services.WebServices
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
+class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var mMovies: List<Movie> = mutableListOf()
+
+    companion object {
+        private const val MOVIE_TYPE = 1
+        private const val LOADING_TYPE = 2
+    }
 
 
-class MovieAdapter(private val moviesData : List<Movie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>()  {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): RecyclerView.ViewHolder {
+        var view: View
 
-    private val MAX_CHARS_TITLE = 10
+        Log.i("RMC", "position------------->:$i")
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.single_movie, parent, false)
-
-        return ViewHolder(v)
+        return when (i) {
+            MOVIE_TYPE -> {
+                view = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_movie_list_item, viewGroup, false)
+                MovieViewHolder(view, mOnMovieListener)
+            }
+            LOADING_TYPE -> {
+                view = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_movie_list_item, viewGroup, false)
+                LoadingViewHolder(view)
+            }
+            else -> {
+                view = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_movie_list_item, viewGroup, false)
+                MovieViewHolder(view, mOnMovieListener)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return moviesData.size
+        return mMovies.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
+        if(getItemViewType(i) == MOVIE_TYPE){
+            viewHolder as MovieViewHolder
+            viewHolder.title.text = mMovies.get(i).original_title
+            viewHolder.publisher.text = mMovies.get(i).overview
 
-        val services = HttpClient.instance().create(WebServices::class.java)
-        val movie = services.movieDetail(moviesData[position].id, Routes.API_KEY)
+            var requestOptions = RequestOptions()
+            requestOptions.placeholder(R.drawable.ic_launcher_background)
 
-        movie.enqueue(object: Callback<Movie> {
-            override fun onFailure(call: Call<Movie>, t: Throwable) {
-                Log.e("zmovies", t.message)
-            }
-            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
-                //Log.i("zmovies", "URL:" + response.raw().request().url()+"")
-                val movieDetail = response.body()
-
-                var shorTitle = movieDetail?.original_title
-                var spaceAfterMax = movieDetail?.original_title?.indexOf(" ", MAX_CHARS_TITLE)
-
-                if(spaceAfterMax != null && spaceAfterMax > 0) {
-                    shorTitle = movieDetail?.original_title?.substring(0, spaceAfterMax) + "..."
-                }
-
-                holder.txt_title.text = shorTitle
-
-                Glide
-                    .with(holder.img_cover.context)
-                    .load(Routes.IMG_HOST + movieDetail?.poster_path)
-                    .centerCrop()
-                    .placeholder(R.drawable.default_image)
-                    .into(holder.img_cover)
-            }
-        })
-
+            Glide
+                    .with(viewHolder.itemView.context)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(Routes.IMG_HOST + mMovies[i].poster_path)
+                    .into(viewHolder.image)
+        }
     }
 
-    class ViewHolder(val parent_view: View) : RecyclerView.ViewHolder(parent_view) {
-        val txt_title: TextView = parent_view.findViewById<View>(R.id.txt_title) as TextView
-        val img_cover: ImageView = parent_view.findViewById<View>(R.id.img_cover) as ImageView
+    fun setMovies(movies: List<Movie>) {
+        this.mMovies = movies
+        notifyDataSetChanged()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (mMovies.get(position).original_title.equals("LOADING...")) {
+            LOADING_TYPE
+        } else {
+            MOVIE_TYPE
+        }
+    }
+
+    fun displayLoading() {
+        if (!isLoading()) {
+            val movie = Movie("LOADING...")
+            val loadingList = mutableListOf<Movie>()
+            loadingList.add(movie)
+            mMovies = loadingList
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun isLoading(): Boolean {
+        if (mMovies.size > 0) {
+            if (mMovies.get(mMovies.size - 1).original_title.equals("LOADING...")) {
+                return true
+            }
+        }
+        return false
     }
 
 }
+
+
