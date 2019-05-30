@@ -7,7 +7,7 @@ object Testing {
 
     fun printMovies(tag: String, list: List<Movie>) {
         for (movie in list) {
-            Log.d(tag, "Movie: $movie.original_title")
+//            Log.d(tag, "Movie: $movie.original_title")
         }
     }
 }

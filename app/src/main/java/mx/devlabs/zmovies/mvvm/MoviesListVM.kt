@@ -16,6 +16,13 @@ class MoviesListVM : ViewModel() {
         mMovieRepository.searchMovies(query, pageNumber)
     }
 
+    fun searchNextPage(){
+        if(!isPerformingQuery) //&& is Viewing Movies
+        {
+            mMovieRepository.searchNextPage()
+        }
+    }
+
     fun getAllMoviesApi() {
         mMovieRepository.getMovies()
     }

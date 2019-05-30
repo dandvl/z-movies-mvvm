@@ -81,8 +81,9 @@ class HorizontalDottedProgress : View {
     }
 
     private fun startAnimation() {
+
         val bounceAnimation = BounceAnimation()
-        bounceAnimation.duration = 1000
+        bounceAnimation.duration = 100
         bounceAnimation.repeatCount = Animation.INFINITE
         bounceAnimation.interpolator = LinearInterpolator()
         bounceAnimation.setAnimationListener(object : Animation.AnimationListener {

@@ -10,7 +10,8 @@ class MovieViewHolder(var parent_view: View, var onMovieListener: OnMovieListene
 
     var title = parent_view.findViewById<View>(R.id.movie_title) as TextView
     var publisher : TextView = parent_view.findViewById<View>(R.id.movie_publisher) as TextView
-    var image  = parent_view.findViewById<View>(R.id.movie_image) as AppCompatImageView
+    var image = parent_view.findViewById<View>(R.id.movie_image) as AppCompatImageView
+    var counter : TextView = parent_view.findViewById<View>(R.id.movie_counter) as TextView
 
     init{
         parent_view.setOnClickListener(this)

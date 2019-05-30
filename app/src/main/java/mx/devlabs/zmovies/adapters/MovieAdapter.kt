@@ -24,15 +24,13 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): RecyclerView.ViewHolder {
         var view: View
 
-        Log.i("RMC", "position------------->:$i")
-
         return when (i) {
             MOVIE_TYPE -> {
                 view = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_movie_list_item, viewGroup, false)
                 MovieViewHolder(view, mOnMovieListener)
             }
             LOADING_TYPE -> {
-                view = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_movie_list_item, viewGroup, false)
+                view = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_loading_list_item, viewGroup, false)
                 LoadingViewHolder(view)
             }
             else -> {
@@ -48,18 +46,19 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
         if(getItemViewType(i) == MOVIE_TYPE){
+            Log.i("RMC", "mMovies[i].overview${mMovies[i].overview}")
             viewHolder as MovieViewHolder
-            viewHolder.title.text = mMovies.get(i).original_title
-            viewHolder.publisher.text = mMovies.get(i).overview
-
+            viewHolder.title.text = mMovies[i].original_title
+            viewHolder.publisher.text = mMovies[i].overview
+            viewHolder.counter.text = (i+1).toString()
             var requestOptions = RequestOptions()
             requestOptions.placeholder(R.drawable.ic_launcher_background)
 
             Glide
-                    .with(viewHolder.itemView.context)
-                    .setDefaultRequestOptions(requestOptions)
-                    .load(Config.IMG_HOST + mMovies[i].poster_path)
-                    .into(viewHolder.image)
+                .with(viewHolder.itemView.context)
+                .setDefaultRequestOptions(requestOptions)
+                .load(Config.IMG_HOST + mMovies[i].poster_path)
+                .into(viewHolder.image)
         }
     }
 
@@ -71,7 +70,11 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
     override fun getItemViewType(position: Int): Int {
         return if (mMovies.get(position).original_title.equals("LOADING...")) {
             LOADING_TYPE
-        } else {
+        } else if(position == mMovies.size - 1
+                && position != 0
+                && !mMovies.get(position).original_title.equals("EXHAUSTED...")){
+            LOADING_TYPE
+        }else {
             MOVIE_TYPE
         }
     }

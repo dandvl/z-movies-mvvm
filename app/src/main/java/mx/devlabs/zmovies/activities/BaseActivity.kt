@@ -12,7 +12,6 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var mProgressBar: ProgressBar
 
     override fun setContentView(layoutResID: Int) {
-
         val constraintLayout = layoutInflater.inflate(R.layout.activity_base, null) as ConstraintLayout
         val frameLayout = constraintLayout.findViewById<ViewGroup>(R.id.activity_content)
         mProgressBar = constraintLayout.findViewById(R.id.progress_bar)
