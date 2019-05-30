@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.GET
 
-interface MovieServices {
+interface MoviesRoutes {
 
     @GET(Routes.LAST_CHANGES)
     fun movies(@Query("api_key") api_key: String): Call<HttpResponse<Movie>>

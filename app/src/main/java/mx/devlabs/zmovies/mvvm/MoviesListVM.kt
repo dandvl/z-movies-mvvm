@@ -6,7 +6,7 @@ import mx.devlabs.zmovies.models.Movie
 
 class MoviesListVM : ViewModel() {
 
-    private val mMovieRepository: MovieRepository = MovieRepository.getInstance()
+    private val mMovieRepository: MoviesRepository = MoviesRepository.getInstance()
     var isPerformingQuery : Boolean = false
 
     val movies: LiveData<List<Movie>> get() = mMovieRepository.getMovies()

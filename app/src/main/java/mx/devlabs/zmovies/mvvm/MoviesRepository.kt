@@ -1,16 +1,16 @@
 package mx.devlabs.zmovies.mvvm
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import mx.devlabs.zmovies.models.Movie
-import mx.devlabs.zmovies.requests.MovieApiClient
 
-class MovieRepository private constructor() {
+class MoviesRepository private constructor() {
 
-    private val mMovieApiClient: MovieApiClient = MovieApiClient.getInstance()
+    private var moviesLD: MutableLiveData<List<Movie>> = MutableLiveData()
 
     fun getMovies() : LiveData<List<Movie>>
     {
-        return mMovieApiClient.movies
+        return moviesLD
     }
 
     fun searchMovies(query: String, pageNumber: Int) {
@@ -18,7 +18,8 @@ class MovieRepository private constructor() {
         if (pageNumber == 0) {
             pageNumber = 1
         }
-        mMovieApiClient.searchMovies(query, pageNumber)
+
+        MoviesServices.search(moviesLD, query, pageNumber)
     }
 
     fun popularMovies() {
@@ -26,15 +27,15 @@ class MovieRepository private constructor() {
     }
 
     companion object {
-        private var instance: MovieRepository ?= null
+        private var instance: MoviesRepository ?= null
 
-        fun getInstance(): MovieRepository {
-            return (instance ?: MovieRepository())
+        fun getInstance(): MoviesRepository {
+            return (instance ?: MoviesRepository())
         }
     }
 
     fun cancelRequest(){
-        mMovieApiClient.cancelRequest()
+//        mMovieApiClient.cancelRequest()
     }
 }
 

@@ -48,15 +48,14 @@ class StartActivity : BaseActivity(), OnMovieListener{
     }
 
     private fun subscribeObservers() {
-        moviesListVM.movies.observe(this, object : Observer<List<Movie>> {
-            override fun onChanged(movies: List<Movie>?) {
-                if (movies != null && movies.isNotEmpty()) {
-                    Testing.printMovies("RMC", movies)
-                    moviesListVM.isPerformingQuery = false
-                    mRecyclerAdapter?.setMovies(movies)
-                }else{
-                    Log.i("RMC", "No movies")
-                }
+        //ViewModel.LiveData.should be called addObserver then the parameters (LifeCycleOwner and the new  Observer)
+        moviesListVM.movies.observe(this, Observer<List<Movie>> { movies ->
+            if (movies != null && movies.isNotEmpty()) {
+                Testing.printMovies("RMC", movies)
+                moviesListVM.isPerformingQuery = false
+                mRecyclerAdapter?.setMovies(movies)
+            }else{
+                Log.i("RMC", "No moviesRoutes")
             }
         })
     }
