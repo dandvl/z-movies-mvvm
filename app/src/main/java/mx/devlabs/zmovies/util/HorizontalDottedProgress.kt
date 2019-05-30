@@ -1,0 +1,118 @@
+package mx.devlabs.zmovies.util
+
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.graphics.Paint
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
+import android.view.animation.Transformation
+
+
+class HorizontalDottedProgress : View {
+    //actual dot radius
+    private var mDotRadius = 5f
+
+    //Bounced Dot Radius
+    private var mBounceDotRadius = 8
+
+    //to get identified in which position dot has to bounce
+    private var mDotPosition: Int = 0
+
+    //specify how many dots you need in a progressbar
+    private var mDotAmount = 10
+
+    constructor(context: Context) : super(context) {}
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+
+    //Method to draw your customized dot on the canvas
+    override protected fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+
+        val paint = Paint()
+
+        //set the color for the dot that you want to draw
+        paint.setColor(Color.parseColor("#fd583f"))
+
+        //function to create dot
+        createDot(canvas, paint)
+    }
+
+    override protected fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        //Animation called when attaching to the window, i.e to your screen
+        startAnimation()
+    }
+
+    private fun createDot(canvas: Canvas, paint: Paint) {
+
+        //here i have setted progress bar with 10 dots , so repeat and wnen i = mDotPosition  then increase the radius of dot i.e mBounceDotRadius
+        for (i in 0 until mDotAmount) {
+            if (i == mDotPosition) {
+                canvas.drawCircle(10f + (i * 20), mBounceDotRadius.toFloat(), mBounceDotRadius.toFloat(), paint)
+            } else {
+                canvas.drawCircle(10f + (i * 20), mBounceDotRadius.toFloat(), mDotRadius, paint)
+            }
+        }
+
+
+    }
+
+    override protected fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val width: Int
+        val height: Int
+
+        //calculate the view width
+        val calculatedWidth = 20 * 9
+
+        width = calculatedWidth
+        height = mBounceDotRadius * 2
+
+
+        //MUST CALL THIS
+        setMeasuredDimension(width, height)
+    }
+
+    private fun startAnimation() {
+        val bounceAnimation = BounceAnimation()
+        bounceAnimation.duration = 1000
+        bounceAnimation.repeatCount = Animation.INFINITE
+        bounceAnimation.interpolator = LinearInterpolator()
+        bounceAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+                mDotPosition++
+                //when mDotPosition == mDotAmount , then start again applying animation from 0th positon , i.e  mDotPosition = 0;
+                if (mDotPosition == mDotAmount) {
+                    mDotPosition = 0
+                }
+                Log.d("INFOMETHOD", "----On Animation Repeat----")
+
+            }
+        })
+        startAnimation(bounceAnimation)
+    }
+
+
+    private inner class BounceAnimation : Animation() {
+        override protected fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+            super.applyTransformation(interpolatedTime, t)
+            //call invalidate to redraw your view againg.
+            invalidate()
+        }
+    }
+}
