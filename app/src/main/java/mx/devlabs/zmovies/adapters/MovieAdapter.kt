@@ -45,19 +45,19 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
-        if(getItemViewType(i) == MOVIE_TYPE){
+        if (getItemViewType(i) == MOVIE_TYPE) {
             viewHolder as MovieViewHolder
             viewHolder.title.text = mMovies[i].original_title
             viewHolder.publisher.text = mMovies[i].overview
-            viewHolder.counter.text = (i+1).toString()
+            viewHolder.counter.text = (i + 1).toString()
             var requestOptions = RequestOptions()
             requestOptions.placeholder(R.drawable.ic_launcher_background)
 
             Glide
-                .with(viewHolder.itemView.context)
-                .setDefaultRequestOptions(requestOptions)
-                .load(Config.IMG_HOST + mMovies[i].poster_path)
-                .into(viewHolder.image)
+                    .with(viewHolder.itemView.context)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(Config.IMG_HOST + mMovies[i].poster_path)
+                    .into(viewHolder.image)
         }
     }
 
@@ -69,11 +69,11 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
     override fun getItemViewType(position: Int): Int {
         return if (mMovies[position].original_title.equals("LOADING...")) {
             LOADING_TYPE
-        } else if(position == mMovies.size - 1
+        } else if (position == mMovies.size - 1
                 && position != 0
-                && !mMovies[position].original_title.equals("EXHAUSTED...")){
+                && !mMovies[position].original_title.equals("EXHAUSTED...")) {
             LOADING_TYPE
-        }else {
+        } else {
             MOVIE_TYPE
         }
     }
@@ -95,6 +95,13 @@ class MovieAdapter(var mOnMovieListener: OnMovieListener) : RecyclerView.Adapter
             }
         }
         return false
+    }
+
+    fun getSelectedMovie(position: Int): Movie {
+        if (mMovies.isNotEmpty()) {
+            return mMovies.get(position)
+        }
+        return Movie("¿¿??")
     }
 
 }

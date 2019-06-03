@@ -2,6 +2,7 @@ package mx.devlabs.zmovies.activities
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -88,11 +89,12 @@ class MainActivity : BaseActivity(), OnMovieListener{
             }
         })
 
-
     }
 
     override fun onMovieClick(position: Int) {
-        Log.i("RMC", "movie click")
+        var intent = Intent(this@MainActivity, MovieActivity::class.java)
+        intent.putExtra("movie", mRecyclerAdapter?.getSelectedMovie(position))
+        startActivity(intent)
     }
 
     override fun onCategoryClick(category: String) {
