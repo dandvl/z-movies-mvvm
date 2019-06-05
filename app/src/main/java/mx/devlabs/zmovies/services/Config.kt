@@ -8,7 +8,7 @@ object Config {
 
     //Routes
     const val LAST_CHANGES = "movie/changes"
-    const val MOVIE_DETAIL = "movie/{movie_id}?api_key=$API_KEY"
     const val POPULAR_MOVIES = "/3/discover/movie?sort_by=popularity.desc"
+    const val MOVIE_DETAIL = "/3/movie/{movie_id}?api_key=$API_KEY"
     const val SEARCH_MOVIES = "/3/search/movie?api_key=$API_KEY"
 }

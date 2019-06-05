@@ -8,6 +8,7 @@ import mx.devlabs.zmovies.models.Movie
 class MoviesRepository private constructor() {
 
     private var moviesLD: MutableLiveData<List<Movie>> = MutableLiveData()
+    var movieLD : MutableLiveData<Movie> = MutableLiveData()
 
     //To save the state of the scroll of the recycler view
     private lateinit var query : String
@@ -26,12 +27,11 @@ class MoviesRepository private constructor() {
     }
 
     fun searchNextPage(){
-        Log.i("RMC", "search next page!")
         searchMovies(query, ++pageNumber)
     }
 
-    fun popularMovies() {
-//        mMovieApiClient.getAllMoviesApi()
+    fun findById(id : String){
+        MoviesServices.getMovieDetails(movieLD, id)
     }
 
     companion object {

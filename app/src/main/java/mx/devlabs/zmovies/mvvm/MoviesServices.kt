@@ -8,6 +8,7 @@ import mx.devlabs.zmovies.services.HttpResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.security.auth.login.LoginException
 
 class MoviesServices{
 
@@ -37,6 +38,24 @@ class MoviesServices{
             })
 
         }
+
+        fun getMovieDetails(movieLD : MutableLiveData<Movie>, movieId : String){
+
+            val request = HttpClient.moviesRoutes.movieDetail(movieId)
+
+            request.enqueue(object: Callback<Movie> {
+                override fun onFailure(call: Call<Movie>, t: Throwable) {
+                    Log.i("RMC", "onFailure")
+                }
+                override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+                    Log.i("RMC", "onResponse")
+                    val response = response?.body() as  Movie
+                    movieLD.postValue(response)
+                }
+            })
+
+        }
+
 
     }
 

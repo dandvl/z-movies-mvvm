@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/parent"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="gone">
@@ -12,16 +12,16 @@
 
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/recipe_image"
+            android:id="@+id/movie_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/movie_image_height"
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/recipe_title"
+            android:id="@+id/movie_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/recipe_image"
+            android:layout_below="@+id/movie_image"
             android:padding="7dp"
             android:text="Some Movie title"
             android:textColor="#000"
@@ -32,7 +32,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/recipe_title"
+            android:layout_below="@+id/movie_title"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="100">
@@ -41,14 +41,14 @@
                 android:id="@+id/ingredients_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/recipe_title"
+                android:layout_below="@+id/movie_title"
                 android:layout_weight="90"
-                android:text="Ingredients"
+                android:text="Overview"
                 android:textSize="@dimen/movie_publisher_text_size"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/recipe_social_score"
+                android:id="@+id/movie_score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
@@ -66,7 +66,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/container"
             android:orientation="vertical"
-            android:padding="10dp"></LinearLayout>
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/movie_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </LinearLayout>
 
 
     </RelativeLayout>

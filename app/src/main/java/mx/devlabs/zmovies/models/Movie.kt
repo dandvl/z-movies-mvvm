@@ -13,4 +13,8 @@ data class Movie(
         val overview: String?
 ) : Parcelable {
     constructor(title: String) : this("", false, title, "", "", "")
+
+    var popularity : Float = 0.0f
+    var imdb_id : String = ""
+
 }
